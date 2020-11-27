@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { AppBar, FormControl, InputLabel, Link, OutlinedInput, Paper, Tab, Tabs } from '@material-ui/core';
+import { AppBar, FormControl, Input, InputLabel, Link, OutlinedInput, Paper, Tab, Tabs } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => ({
     padding: "4px",
     marginTop: "100px",
     borderRadius: "5px",
-    border: "2px dashed",
+    border: "6px dashed",
     borderColor: theme.palette.background.default,
 
     display: "flex",
@@ -43,21 +43,49 @@ function Login() {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
+    // useEffect(() => {
+      
+    // }, [userName, email, password])
+
     const handleUserNameChange = (event: any) => {
       setUserName(event.target.value);
     };
     const handleEmailChange = (event: any) => {
       setEmail(event.target.value);
-    }
+    };
     const handlePasswordChange = (event: any) => {
       setPassword(event.target.value);
+    };
+    const handleClick = () => {
+      console.log(sendData());
     }
+
+    const sendData = () => {
+      const data = {
+        login: userName,
+        password: password,
+        email: email,
+      }
+      const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      }
+      fetch("/api/user/add", requestOptions)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.statusText)
+        }
+        return response.json()
+      })
+    }
+
     return (
       <div className={classes.root}>
         <AppBar>
-          <Tabs centered>
+          {/* <Tabs centered>
             <Link className={classes.link}><Tab label="Login"/></Link>
-          </Tabs>
+          </Tabs> */}
         </AppBar>
         <Paper className={classes.login} elevation={0}>
           <FormControl variant="outlined" className={classes.formControl}>
@@ -97,6 +125,7 @@ function Login() {
               }}
             />
           </FormControl>
+          <Input type="submit" value="Отправить" onClick={handleClick}/>
         </Paper>
       </div>
     );
