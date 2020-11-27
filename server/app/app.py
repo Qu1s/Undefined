@@ -1,5 +1,5 @@
 from flask_login import LoginManager, UserMixin, current_user, login_user, logout_user
-from flask import Flask, render_template, request, flash, redirect, url_for, make_response
+from flask import Flask, render_template, request, flash, redirect, url_for, make_response, jsonify
 from flask_mongoengine import MongoEngine, Document
 from config import *
 
@@ -13,5 +13,3 @@ app.config['MONGODB_SETTINGS'] = {
 
 db = MongoEngine(app)
 login_manager = LoginManager(app)
-
-from db_cruder import *

@@ -1,6 +1,7 @@
 from app import *
 import os
-from views import index
+from views import index, p404
+from api import users
 
 
 if __name__ == "__main__":
