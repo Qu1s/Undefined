@@ -13,6 +13,12 @@ def api_login_user():
     result = DB_login_user(data)
     return result
 
+@app.route('/api/user/logout', methods=['POST'])
+def api_logout_user():
+    data = request.json
+    result = DB_logout_user(data)
+    return result
+
 @app.route('/api/user/update', methods=['POST'])
 def api_update_user():
     data = request.json
