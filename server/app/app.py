@@ -14,4 +14,4 @@ app.config['MONGODB_SETTINGS'] = {
 db = MongoEngine(app)
 login_manager = LoginManager(app)
 
-from dbCruder import *
+from db_cruder import *
