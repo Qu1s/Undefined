@@ -1,7 +1,7 @@
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Register from './Register';
 
 const theme = createMuiTheme({
   palette: {
@@ -11,7 +11,7 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
-    <App/>
+    <Register/>
   </ThemeProvider>,
   document.getElementById('root')
 );

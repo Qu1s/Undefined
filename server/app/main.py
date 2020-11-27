@@ -1,6 +1,6 @@
 from app import *
 import os
-from views import index, p404
+from views import p404
 from api import users
 
 

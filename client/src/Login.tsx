@@ -62,12 +62,8 @@ function Login() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       }
-      const currentResponse = await fetch("http://www.localhost:5000/api/user/login", requestOptions).then(function(response) {
-        return response.text();
-      }).then(function(data) {
-        console.log(data); // this will be a string
-        return data;
-      });;
+      const currentResponse = await fetch("http://www.localhost:5000/api/user/login", requestOptions)
+      console.log(currentResponse)
       return currentResponse;
     }
 

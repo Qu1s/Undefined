@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
     height: "30px",
   },
 }))
-function Login() {
+function Register() {
     const classes = useStyles();
     const [userName, setUserName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
@@ -56,7 +56,7 @@ function Login() {
       console.log(sendData());
     }
 
-    const sendData = () => {
+    async function sendData() {
       const data = {
         login: userName,
         password: password,
@@ -67,13 +67,9 @@ function Login() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       }
-      fetch("http://www.localhost:5000/api/user/add", requestOptions)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error(response.statusText)
-        }
-        return response.json()
-      })
+      const currentResponse = await fetch("http://www.localhost:5000/api/user/login", requestOptions).then(response => response.json())
+      
+      return currentResponse;
     }
 
     return (
