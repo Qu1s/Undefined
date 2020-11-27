@@ -40,10 +40,14 @@ const useStyles = makeStyles(theme => ({
 function Login() {
     const classes = useStyles();
     const [userName, setUserName] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
 
     const handleUserNameChange = (event: any) => {
       setUserName(event.target.value);
+    };
+    const handleEmailChange = (event: any) => {
+      setEmail(event.target.value);
     };
     const handlePasswordChange = (event: any) => {
       setPassword(event.target.value);
@@ -52,18 +56,24 @@ function Login() {
       console.log(sendData());
     }
 
-    async function sendData() {
+    const sendData = () => {
       const data = {
         login: userName,
         password: password,
+        email: email,
       }
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       }
-      const response = await fetch("http://www.localhost:5000/api/user/add", requestOptions);
-      return response;
+      fetch("http://www.localhost:5000/api/user/add", requestOptions)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(response.statusText)
+        }
+        return response.json()
+      })
     }
 
     return (
@@ -74,6 +84,18 @@ function Login() {
           </Tabs> */}
         </AppBar>
         <Paper className={classes.login} elevation={0}>
+          <FormControl variant="outlined" className={classes.formControl}>
+            <InputLabel htmlFor="component-outlined">Email</InputLabel>
+            <OutlinedInput 
+              id="component-outlined" 
+              value={email} 
+              onChange={handleEmailChange} 
+              label="Email" 
+              classes={{
+                input: classes.input,
+              }}
+            />
+          </FormControl>
           <FormControl variant="outlined" className={classes.formControl}>
             <InputLabel htmlFor="component-outlined">Username</InputLabel>
             <OutlinedInput 
@@ -105,5 +127,5 @@ function Login() {
     );
   }
   
-  export default Login;
+  export default Register;
   
