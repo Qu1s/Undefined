@@ -62,7 +62,7 @@ function Login() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
       }
-      const response = await fetch("http://www.localhost:5000/api/user/add", requestOptions);
+      const response = await fetch("http://www.localhost:5000/api/user/login", requestOptions);
       return response;
     }
 
