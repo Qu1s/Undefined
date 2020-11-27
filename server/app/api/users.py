@@ -22,5 +22,5 @@ def api_update_user():
 @app.route('/api/user/get', methods=['GET'])
 def api_get_user():
     data = dict(request.args)
-
-    return jsonify({'error': data}), 404
+    result = DB_get_user(data)
+    return result

@@ -27,9 +27,9 @@ def DB_add_user(data):
             user = User(login=data['login'], password=data['password'], email=data['email']).save()
             login_user(user, remember=True)
             return jsonify({'status':'OK',
-                            'user': {'login' : user.login, 
-                                     'name'  : user.name,
-                                     'email' : user.email}}), 200
+                            'user'  : {'login' : user.login, 
+                                       'name'  : user.name,
+                                       'email' : user.email}}), 200
 
     except Exception as e:
         
@@ -50,9 +50,9 @@ def DB_login_user(data):
         if check_password_hash(user.password, data['password']):
             login_user(user, remember=True)
             return jsonify({'status':'OK',
-                            'user': {'login' : user.login, 
-                                     'name'  : user.name,
-                                     'email' : user.email}}), 200
+                            'user'  : {'login' : user.login, 
+                                       'name'  : user.name,
+                                       'email' : user.email}}), 200
         else:
             return jsonify({'status':'Error', 'message':'Неверный пароль'}), 400
 
@@ -65,9 +65,9 @@ def DB_update_user(data):
             user = User.objects.get_or_404(login=data['login']).update(name=data['name'], email=data['email'])
             if user:
                 return jsonify({'status':'OK',
-                                    'user': {'login' : data['login'], 
-                                            'name'  : data['name'],
-                                            'email' : data['email']}}), 200
+                                'user'  : {'login' : data['login'], 
+                                           'name'  : data['name'],
+                                           'email' : data['email']}}), 200
             else:
                 return jsonify({'status':'Error', 'message':'Произошла неизвестная ошибка. Попробуйте снова.'}), 400
         else:
@@ -78,8 +78,12 @@ def DB_update_user(data):
             return jsonify({'status':'Error', 'message':'Такая почта уже существует.'}), 400
         return jsonify({'status':'Error', 'message':'Пользователь не существует'}), 400
 
-def DB_get_user(login):
+def DB_get_user(data):
     try:
-        return User.objects.get(login=login)
-    except:
-        return False
+        user = User.objects.get(login=data['login'])
+        return jsonify({'status':'OK',
+                        'user'  : {'login' : user.login, 
+                                   'name'  : user.name,
+                                   'email' : user.email}}), 200
+    except Exception as e:
+        return jsonify({'status':'Error', 'message':'Пользователь не существует'}), 400
