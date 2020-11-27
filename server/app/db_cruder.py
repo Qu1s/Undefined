@@ -53,14 +53,24 @@ def DB_login_user(data):
     except Exception as e:
         return jsonify({'status':'Error', 'message':'Пользователь не существует'}), 400
 
-def DB_update_user(name, login, email, password):
+def DB_update_user(data):
     try:
-        if current_user.login == login:
-            user = User.objects.get(login=login).update_one(name=name, email=email, password=password)
-        return True
+        if current_user.login == data['login']:
+            user = User.objects.get_or_404(login=data['login']).update(name=data['name'], email=data['email'])
+            if user:
+                return jsonify({'status':'OK',
+                                    'user': {'login' : data['login'], 
+                                            'name'  : data['name'],
+                                            'email' : data['email']}}), 200
+            else:
+                return jsonify({'status':'Error', 'message':'Произошла неизвестная ошибка. Попробуйте снова.'}), 400
+        else:
+            return jsonify({'status':'Error', 'message':'Невозможно изменить данные другого пользователя'}), 400
 
-    except:
-        return False
+    except Exception as e:
+        if str(e).find('email') > 0:
+            return jsonify({'status':'Error', 'message':'Такая почта уже существует.'}), 400
+        return jsonify({'status':'Error', 'message':'Пользователь не существует'}), 400
 
 def DB_get_user(login):
     try:

@@ -16,8 +16,8 @@ def api_login_user():
 @app.route('/api/user/update', methods=['POST'])
 def api_update_user():
     data = request.json
-
-    return jsonify({'error': 'Not found'}), 404
+    result = DB_update_user(data)
+    return result
 
 @app.route('/api/user/get', methods=['GET'])
 def api_get_user():

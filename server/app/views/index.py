@@ -1,4 +1,5 @@
 from app import *
+from objects.users import User
 
 
 @login_manager.user_loader
