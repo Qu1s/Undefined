@@ -10,8 +10,8 @@ def api_add_user():
 @app.route('/api/user/login', methods=['POST'])
 def api_login_user():
     data = request.json
-
-    return jsonify({'error': 'Not found'}), 404
+    result = DB_login_user(data)
+    return result
 
 @app.route('/api/user/update', methods=['POST'])
 def api_update_user():
