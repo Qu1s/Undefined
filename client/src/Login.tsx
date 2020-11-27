@@ -1,51 +1,104 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Container, TextField } from '@material-ui/core';
+import { AppBar, FormControl, InputLabel, Link, OutlinedInput, Paper, Tab, Tabs } from '@material-ui/core';
 
-const useStyles = makeStyles({
-    login: {
-      backgroundColor: "#ffffff",
-      color: "#ffffff",
-      width: "400px",
-      height: "500px",
-      padding: "4px",
-      marginTop: "100px",
-      boxShadow: "box-shadow: -2px 10px 20px 9px rgba(0,0,0,0.78); -webkit-box-shadow: -2px 10px 20px 9px rgba(0,0,0,0.78); -moz-box-shadow: -2px 10px 20px 9px rgba(0,0,0,0.78);",
-      borderRadius: "5px",
-      border: "2px dashed #212121",
+const useStyles = makeStyles(theme => ({
+  root: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: theme.palette.background.default,
+    display: "flex",
+    justifyContent: "center",
+  },
+  link: {
+    textDecoration: 'none',
+    color: theme.palette.text.primary,
+  },
+  login: {
+    width: "400px",
+    height: "500px",
+    padding: "4px",
+    marginTop: "100px",
+    borderRadius: "5px",
+    border: "2px dashed",
+    borderColor: theme.palette.background.default,
 
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    textField: {
-      paddingBottom: "16px",
-    }
-})
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  formControl: {
+    paddingBottom: "16px",
+    width: "250px",
+  },
+  input: {
+    padding: "18px 14px 16px",
+    height: "30px",
+  },
+}))
 function Login() {
     const classes = useStyles();
+    const [userName, setUserName] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+
+    const handleUserNameChange = (event: any) => {
+      setUserName(event.target.value);
+    };
+    const handleEmailChange = (event: any) => {
+      setEmail(event.target.value);
+    }
+    const handlePasswordChange = (event: any) => {
+      setPassword(event.target.value);
+    }
     return (
-      <Container className={classes.login}>
-        <TextField
-          required
-          id="username-input"
-          label="Username"
-          type="username"
-          autoComplete="current-username"
-          variant="outlined"
-          className={classes.textField}
-        />
-        <TextField
-          required
-          id="password-input"
-          label="Password"
-          type="password"
-          autoComplete="current-password"
-          variant="outlined"
-          className={classes.textField}
-      />
-      </Container>
+      <div className={classes.root}>
+        <AppBar>
+          <Tabs centered>
+            <Link className={classes.link}><Tab label="Login"/></Link>
+          </Tabs>
+        </AppBar>
+        <Paper className={classes.login} elevation={0}>
+          <FormControl variant="outlined" className={classes.formControl}>
+            <InputLabel htmlFor="component-outlined">Email</InputLabel>
+            <OutlinedInput 
+              id="component-outlined" 
+              value={email} 
+              onChange={handleEmailChange} 
+              label="Email" 
+              classes={{
+                input: classes.input,
+              }}
+            />
+          </FormControl>
+          <FormControl variant="outlined" className={classes.formControl}>
+            <InputLabel htmlFor="component-outlined">Username</InputLabel>
+            <OutlinedInput 
+              id="username-input" 
+              value={userName} 
+              onChange={handleUserNameChange} 
+              label="Username" 
+              classes={{
+                input: classes.input,
+              }}
+            />
+          </FormControl>
+          <FormControl variant="outlined" className={classes.formControl}>
+            <InputLabel htmlFor="component-outlined">Password</InputLabel>
+            <OutlinedInput 
+              id="password-input" 
+              value={password} 
+              type="password"
+              onChange={handlePasswordChange} 
+              label="Password" 
+              classes={{
+                input: classes.input,
+              }}
+            />
+          </FormControl>
+        </Paper>
+      </div>
     );
   }
   
