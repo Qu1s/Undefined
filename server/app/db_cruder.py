@@ -7,6 +7,9 @@ import uuid
 
 def DB_add_user(data):
     try:
+        if current_user.is_authenticated:
+            return jsonify({'status':'Error', 'message':'Пользователь уже авторизован'}), 400
+
         status = 0
         if len(data['login']) < 3 or len(data['login']) > 20:
             status += 1
@@ -39,6 +42,9 @@ def DB_add_user(data):
 
 def DB_login_user(data):
     try:
+        if current_user.is_authenticated:
+            return jsonify({'status':'Error', 'message':'Пользователь уже авторизован'}), 400
+
         user = User.objects.get_or_404(login=data['login'])
 
         if check_password_hash(user.password, data['password']):
